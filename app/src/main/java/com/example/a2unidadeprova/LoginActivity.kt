@@ -26,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
                     editor.putStringSet("user", user)
                     editor.commit()
                     //redirect to list
+                    val it = Intent(this, MainActivity::class.java)
+                    startActivity(it)
                 }else {
                     Toast.makeText(this,"Senha incorreta!", Toast.LENGTH_LONG).show()
                 }

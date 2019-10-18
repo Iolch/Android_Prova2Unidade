@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/btnsync"
+        android:icon="@drawable/ic_sync"
+        android:title="sync somethin"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/btnmore"
+        android:icon="@drawable/ic_more_vert"
+        android:title="Add note"
+        app:showAsAction="never"
+        >
+        <menu>
+            <item android:id="@+id/btnregistertask"
+                android:title="Cadastrar Tarefas"/>
+            <item android:id="@+id/btnfinishtask"
+                android:title="Concluir Tarefas"/>
+            <item android:id="@+id/btnlogout"
+                android:title="Sair"/>
+        </menu>
+    </item>
+</menu>
