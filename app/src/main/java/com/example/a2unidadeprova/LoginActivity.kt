@@ -11,6 +11,15 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     private val REGISTER: Int = 1;
+    override fun onStart() {
+        super.onStart()
+        val logged = getSharedPreferences("logged", Context.MODE_PRIVATE)
+        logged.getStringSet("user", null)
+        if(logged != null){
+            val it = Intent(this, MainActivity::class.java)
+            startActivity(it)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

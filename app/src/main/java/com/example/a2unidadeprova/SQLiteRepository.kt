@@ -68,7 +68,7 @@ class SQLiteRepository(context: Context): TaskRepository {
         db.close()
         return tasks
     }
-    private fun insert(task: Task): Long
+    private fun insert(task: Task)
     {
         val db = helper.writableDatabase
         val cv = ContentValues().apply {
@@ -81,7 +81,7 @@ class SQLiteRepository(context: Context): TaskRepository {
             task.id = id;
         }
         db.close()
-        return id;
+//        return id;
     }
 
     private fun update(task: Task)
