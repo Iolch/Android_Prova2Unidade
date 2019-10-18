@@ -6,8 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
+
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+    private val database: SQLiteRepository = SQLiteRepository(this)
+    private lateinit var listtasks: ArrayList<Task>
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -27,9 +37,28 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+    override fun deleteTask(index: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun editTask(position: Int, name: String, description: String, checked: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        database.save(Task("Tarefa 1", "descricao qualquer", 1))
+        listtasks = database.selectAll();
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = TaskListAdapter(listtasks, this, this, this)
+
+        recyclerView = findViewById<RecyclerView>(R.id.task_list_recyclerview).apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
     }
     fun logout(){
         val logged = getSharedPreferences("logged", Context.MODE_PRIVATE)
