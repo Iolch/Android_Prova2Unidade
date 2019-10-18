@@ -43,19 +43,26 @@ class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
         return super.onOptionsItemSelected(item)
     }
     override fun deleteTask(index: Int) {
-        database.remove(listtasks[index])
-        listtasks.removeAt(index)
-        viewAdapter.notifyDataSetChanged()
+        DeleteDialogFragment.show(supportFragmentManager, object : DeleteDialogFragment.OnDialoListener {
+            override fun onOK() {
+                database.remove(listtasks[index])
+                listtasks.removeAt(index)
+                viewAdapter.notifyDataSetChanged()
+            }
+        })
+
     }
 
     override fun editTask(position: Int, name: String, description: String, checked: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val edttask:Task = Task(listtasks[position].name, description, checked, listtasks[position].id)
+        listtasks[position] = edttask
+        database.save(edttask)
+        viewAdapter.notifyDataSetChanged()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        database.save(Task("Tarefa 1", "descricao qualquer", 1))
         listtasks = database.selectAll();
         viewManager = LinearLayoutManager(this)
         viewAdapter = TaskListAdapter(listtasks, this, this, this)
@@ -65,7 +72,6 @@ class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
             layoutManager = viewManager
             adapter = viewAdapter
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

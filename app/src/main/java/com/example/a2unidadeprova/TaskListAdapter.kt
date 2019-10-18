@@ -40,7 +40,13 @@ class TaskListAdapter (private  val tasks: ArrayList<Task>, private val context:
             }
             itemView.setOnLongClickListener()
             {
-                deleteListener.deleteTask(layoutPosition)
+                if(checked.isChecked) {
+
+                    deleteListener.deleteTask(layoutPosition)
+                }
+                else{
+                    NotificationUtils.notificationSimple(context, name.text.toString(), "A tarefa não pode ser excluída, pois não foi deletada", 1)
+                }
                 true
             }
         }
