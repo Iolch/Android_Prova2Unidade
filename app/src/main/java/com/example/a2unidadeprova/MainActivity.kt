@@ -10,6 +10,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.task_item.*
+import android.widget.CompoundButton
+
+
 
 class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
 
@@ -36,6 +40,7 @@ class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
             register()
         }
         if(item.itemId == R.id.btnfinishtask){
+            finishTasks()
         }
         if(item.itemId == R.id.btnlogout){
             logout()
@@ -73,7 +78,6 @@ class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
             adapter = viewAdapter
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode === Activity.RESULT_OK){
@@ -107,6 +111,13 @@ class MainActivity : AppCompatActivity(), OnDeleteListener, OnEditListener {
     }
     fun refresh(){
         listtasks = database.selectAll()
+        viewAdapter.notifyDataSetChanged()
         Toast.makeText(this,"Atualizando!", Toast.LENGTH_SHORT).show()
+    }
+    fun finishTasks(){
+        for ((index, task) in listtasks.withIndex()) {
+            editTask(index, task.name, task.description, 1)
+        }
+        refresh()
     }
 }
